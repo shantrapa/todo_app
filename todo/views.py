@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
-
-from .models import *
-from .forms import *
-# Create your views here.
+from django.http import JsonResponse
+from .models import Task
+from .forms import TaskForm
 
 def index(request):
     tasks = Task.objects.all()
-
     form = TaskForm()
+
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -17,24 +16,24 @@ def index(request):
     context = {'tasks': tasks, 'form': form}
     return render(request, 'todo/index.html', context)
 
-def update(request, pk):
-    task = Task.objects.get(id = pk)
+def toggle_complete(request, pk):
+    task = Task.objects.get(id=pk)
+    task.isComplete = not task.isComplete
+    task.save()
+    return JsonResponse({'status': 'success', 'isComplete': task.isComplete})
 
-    form = TaskForm(instance=task)
-    if request.method == 'POST':
-        form = TaskForm(request.POST, instance = task)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-    context = {'form': form}
-    return render(request, 'todo/update.html', context)
+def rename(request, pk):
+    task = Task.objects.get(id=pk)
+    new_name = request.POST.get('new_name', '')
+    if new_name:
+        task.name = new_name
+        task.save()
+        return JsonResponse({'status': 'success', 'new_name': task.name})
+    return JsonResponse({'status': 'failure'})
 
 def delete(request, pk):
-	item = Task.objects.get(id=pk)
-
-	if request.method == 'POST':
-		item.delete()
-		return redirect('/')
-
-	context = {'item':item}
-	return render(request, 'todo/delete.html', context)
+    task = Task.objects.get(id=pk)
+    if request.method == 'POST':
+        task.delete()
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'failure'})

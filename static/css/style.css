@@ -183,3 +183,33 @@ form label input[type="checkbox"] {
 button, input, a {
     outline: none;
 }
+
+.task-complete {
+    text-decoration: line;
+    color: rgb(70, 255, 70);
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.task-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.task-item a {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #007bff;
+}
+
+.task-item a:hover {
+    text-decoration: underline;
+}
+
+.delete-icon {
+    color: red;
+    margin-left: 20px;
+}

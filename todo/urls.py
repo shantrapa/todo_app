@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('update/<str:pk>/', views.update, name='update'),
+    path('toggle/<str:pk>/', views.toggle_complete, name='toggle'),
+    path('rename/<str:pk>/', views.rename, name='rename'),
     path('delete/<str:pk>/', views.delete, name='delete'),
 ]
