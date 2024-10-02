@@ -1,0 +1,8 @@
+<p> You are deleting item "{{item}}", Are you sure?</p>
+
+<a href = "{% url 'index' %}">No</a>
+
+<form method = "POST">
+    {% csrf_token %}
+    <input type = "submit" name = "Yes">
+</form>
