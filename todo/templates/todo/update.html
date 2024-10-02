@@ -1,5 +1,21 @@
-<form method = "POST", action = "">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" name = "Change Task">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Task</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+</head>
+<body>
+    <div class="update-container">
+        <h2>Update Task</h2>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Change Task" class="update-btn">
+        </form>
+    </div>
+</body>
+</html>
